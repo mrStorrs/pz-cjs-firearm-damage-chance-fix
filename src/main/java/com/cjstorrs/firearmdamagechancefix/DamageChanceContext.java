@@ -1,6 +1,8 @@
 package com.cjstorrs.firearmdamagechancefix;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import zombie.combat.HitReaction;
+import zombie.core.physics.RagdollBodyPart;
 
 /**
  * Carries the engine's failed Damage Chance decision from the statistic call to
@@ -28,21 +30,44 @@ public final class DamageChanceContext {
         }
     }
 
-    public static boolean applyPendingIgnoreDamage(boolean originalIgnoreDamage) {
+    public static boolean hasPendingDamageReduction() {
+        State state = STATE.get();
+        return state.attackDepth > 0 && state.ignoreDamagePending;
+    }
+
+    public static int reroutePendingHeadBodyPart(int originalBodyPart) {
+        if (hasPendingDamageReduction() && RagdollBodyPart.isHead(originalBodyPart)) {
+            return RagdollBodyPart.BODYPART_SPINE.ordinal();
+        }
+        return originalBodyPart;
+    }
+
+    public static HitReaction reroutePendingHeadReaction(HitReaction originalReaction) {
+        if (!hasPendingDamageReduction()) {
+            return originalReaction;
+        }
+
+        return switch (originalReaction) {
+            case SHOT_HEAD_FWD, SHOT_HEAD_FWD02, SHOT_HEAD_BWD -> HitReaction.SHOT_CHEST;
+            default -> originalReaction;
+        };
+    }
+
+    public static boolean consumePendingDamageReduction() {
         State state = STATE.get();
         if (state.attackDepth <= 0 || !state.ignoreDamagePending) {
-            return originalIgnoreDamage;
+            return false;
         }
 
         state.ignoreDamagePending = false;
         if (FIRST_CORRECTION_LOGGED.compareAndSet(false, true)) {
-            System.out.println("[cjsFirearmDamageChanceFix] Corrected first failed Damage Chance roll; target health damage was suppressed.");
+            System.out.println("[cjsFirearmDamageChanceFix] Corrected first failed Damage Chance roll; applied configured non-critical damage and rerouted head targeting.");
         }
         return true;
     }
 
-    public static boolean consumePendingVehicleSkip() {
-        return applyPendingIgnoreDamage(false);
+    public static float reduceFailedRollDamage(float originalDamage) {
+        return originalDamage * DamageChanceSettings.getFailedRollDamageMultiplier();
     }
 
     public static void endAttack() {

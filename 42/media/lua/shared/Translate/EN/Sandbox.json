@@ -1,0 +1,5 @@
+{
+  "Sandbox_CJSFirearmDamageChanceFix": "CJS Firearm Damage Chance Fix",
+  "Sandbox_CJSFirearmDamageChanceFix_FailedRollDamagePercent": "Failed Roll Damage",
+  "Sandbox_CJSFirearmDamageChanceFix_FailedRollDamagePercent_tooltip": "Percentage of normal damage dealt when a Damage Chance roll fails. Failed rolls are always non-critical and cannot hit the head. Set to 0 for no damage or 100 for full non-critical body damage."
+}

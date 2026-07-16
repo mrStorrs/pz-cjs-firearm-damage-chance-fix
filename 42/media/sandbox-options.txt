@@ -1,0 +1,11 @@
+VERSION = 1,
+
+option CJSFirearmDamageChanceFix.FailedRollDamagePercent
+{
+    type = integer,
+    min = 0,
+    max = 100,
+    default = 25,
+    page = CJSFirearmDamageChanceFix,
+    translation = CJSFirearmDamageChanceFix_FailedRollDamagePercent,
+}

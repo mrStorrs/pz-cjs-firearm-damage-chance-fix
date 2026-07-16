@@ -1,9 +1,9 @@
 name=CJS Firearm Damage Chance Fix
 id=cjsFirearmDamageChanceFix
-description=Fixes B42.19 failed firearm Damage Chance rolls incorrectly applying full damage.
+description=Turns failed B42.19 firearm Damage Chance rolls into low-damage non-head grazes.
 poster=poster.png
 author=CJ Storrs
-modversion=1.0.0
+modversion=1.1.0
 versionMin=42.19.0
 require=\ZombieBuddy
 javaJarFile=media/java/CJSFirearmDamageChanceFix.jar
