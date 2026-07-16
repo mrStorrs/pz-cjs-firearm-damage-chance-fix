@@ -1,0 +1,11 @@
+name=CJS Firearm Damage Chance Fix
+id=cjsFirearmDamageChanceFix
+description=Fixes B42.19 failed firearm Damage Chance rolls incorrectly applying full damage.
+poster=poster.png
+author=CJ Storrs
+modversion=1.0.0
+versionMin=42.19.0
+require=\ZombieBuddy
+javaJarFile=media/java/CJSFirearmDamageChanceFix.jar
+javaPkgName=com.cjstorrs.firearmdamagechancefix
+ZBVersionMin=2.3.2
